@@ -3,7 +3,7 @@ services:
   name: line-bot-python-flask
   env: python
   repo: https://github.com/line/line-bot-sdk-python.git
-  buildCommand: cd pds-bot/flask-echo;pip install gunicorn -r requirements.txt
+  buildCommand: cd pds-bot/flask-echo;pip install -r requirements.txt
   startCommand: cd pds-bot/flask-echo;gunicorn pdsbot:pdsbot
   plan: free
   autoDeploy: false
