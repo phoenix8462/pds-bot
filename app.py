@@ -174,11 +174,11 @@ def work2():
         data =csv.reader(work)
         listdata =np.array(list(data))
 
-        date=listdata[26][3:-2]
+        date=listdata[26][1:32]
 
-        sunday=listdata[27][3:-2]
+        sunday=listdata[27][1:32]
 
-        wwork=listdata[28][3:-2]
+        wwork=listdata[28][1:32]
     for b,c,d in zip(date,sunday,wwork):
         listt.append(b)
         listt.append(c)
