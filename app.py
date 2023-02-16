@@ -165,6 +165,27 @@ def work():
 
     result += str(listt)
     return result
+def work2():
+    import csv
+    import numpy as np
+    listt =[]
+    result=''
+    with open("work.csv",encoding=("Big5")) as work:
+        data =csv.reader(work)
+        listdata =np.array(list(data))
+
+        date=listdata[26][3:-2]
+
+        sunday=listdata[27][3:-2]
+
+        wwork=listdata[28][3:-2]
+    for b,c,d in zip(date,sunday,wwork):
+        listt.append(b)
+        listt.append(c)
+        listt.append(d)
+
+    result += str(listt)
+    return result
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -208,6 +229,12 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
+    elif '3月班表' == c :
+        content =work2()
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+
     elif '假表' == c :
         content =work()
         line_bot_api.reply_message(
