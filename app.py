@@ -229,7 +229,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
-    elif '3月班表' == c :
+    elif '下月班表' == c :
         content =work2()
         line_bot_api.reply_message(
             event.reply_token,
