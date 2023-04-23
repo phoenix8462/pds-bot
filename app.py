@@ -291,7 +291,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
-    elif 'holo@' in c :
+    elif 'HOLO@' in c :
         vtuber = event.message.text.split("@")[1]
         content =holo_search(vtuber)
         line_bot_api.reply_message(
