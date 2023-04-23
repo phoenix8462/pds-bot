@@ -186,6 +186,57 @@ def work2():
 
     result += str(listt)
     return result
+
+import google_auth_oauthlib.flow
+import googleapiclient.discovery
+import googleapiclient.errors
+
+scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]
+
+def holo(vtuber):
+    # Disable OAuthlib's HTTPS verification when running locally.
+    # *DO NOT* leave this option enabled in production.
+    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+
+    api_service_name = "youtube"
+    api_version = "v3"
+    client_secrets_file = "YOUR_CLIENT_SECRET_FILE.json"
+
+    # Get credentials and create an API client
+    flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
+        client_secrets_file, scopes)
+    credentials = flow.run_local_server()
+    youtube = googleapiclient.discovery.build(
+        api_service_name, api_version, credentials=credentials)
+
+    request = youtube.search().list(
+        part="snippet",
+        eventType="live",
+        q=vtuber,
+        type="video"
+    )
+    response = request.execute()
+
+    return response
+def holo_search(vtuber):   
+    try:
+        search_response=holo(vtuber)
+        for item in search_response['items']:
+            # 提取频道的信息
+            # channel_id = item['id']['channelId']  # 频道ID
+            video_id = item['id']['videoId']
+            channel_title = item['snippet']['title']  # 频道标题
+            channel_description = item['snippet']['description']  # 频道描述
+            print(f'https://www.youtube.com/watch?v={video_id}')
+            print(f'頻道標題: {channel_title}')
+            print(f'頻道描述: {channel_description}')
+        result = video_id
+        return result
+    
+    except :
+        result ='error'
+        return result 
+
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -237,6 +288,12 @@ def handle_message(event):
 
     elif '假表' == c :
         content =work()
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+    elif 'holo@' in c :
+        vtuber = event.message.text.split("@")[1]
+        content =holo_search(vtuber)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
