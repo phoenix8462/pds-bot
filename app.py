@@ -52,11 +52,11 @@ def holox(holo):
     from selenium.webdriver.common.by import By
     result=""
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    chrome_options.binary_location = os.getenv("GOOGLE_CHROME_BIN")
     chrome_options.add_argument("--headless") #無頭模式
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
-    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+    driver = webdriver.Chrome(executable_path=os.getenv("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
     # driver = webdriver.Chrome(r'C:\Users\Phoenix\Desktop\chromedriver.exe')
     
@@ -187,28 +187,15 @@ def work2():
     result += str(listt)
     return result
 
-import google_auth_oauthlib.flow
-import googleapiclient.discovery
-import googleapiclient.errors
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
-scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]
 
 def holo(vtuber):
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
-    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-
-    api_service_name = "youtube"
-    api_version = "v3"
-    client_secrets_file = "WEBAPP.json"
-
-    # Get credentials and create an API client
-    flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
-        client_secrets_file, scopes)
-    credentials = flow.run_local_server()
-    youtube = googleapiclient.discovery.build(
-        api_service_name, api_version, credentials=credentials)
-
+    youtube = build('youtube', 'v3',
+                    developerKey='AIzaSyAMLcXoQTJ-64JoGMBsa-DIZ1FeH4VnyxI')
     request = youtube.search().list(
         part="snippet",
         eventType="live",
@@ -233,8 +220,8 @@ def holo_search(vtuber):
         result = video_id
         return result
     
-    except :
-        result ='error'
+    except HttpError as e:
+        result = f'：{e}'
         return result 
 
 @app.route("/callback", methods=['POST'])
