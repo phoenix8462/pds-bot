@@ -289,8 +289,8 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
 
-# if __name__ == "__main__":
-#     app.run(host='0.0.0.0',port=os.environ.get('PORT', 5000))
+if __name__ == "__main__":
+    app.run(host='0.0.0.0',port=os.environ.get('PORT', 5000))
     #9*9    
     #     a=event.message.text.split("@")[0]
     #     b=event.message.text.split("@")[1]
