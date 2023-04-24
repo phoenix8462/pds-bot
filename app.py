@@ -206,7 +206,9 @@ def holo(vtuber):
 
     return response
 def holo_search(vtuber):   
+    
     try:
+        result=[]
         search_response=holo(vtuber)
         for item in search_response['items']:
             # 提取频道的信息
@@ -218,7 +220,9 @@ def holo_search(vtuber):
             title=f'頻道標題: {channel_title}"\n"'
             description = f'頻道描述: {channel_description}"\n"'
             link= f'https://www.youtube.com/watch?v={video_id}'
-        result = title+description+link
+            group =title+description+link
+            
+        result += group
         return result
     
     except HttpError as e:
