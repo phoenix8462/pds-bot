@@ -190,12 +190,12 @@ def work2():
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-
 def holo(vtuber):
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
+    developerKey = os.getenv('apikey')
     youtube = build('youtube', 'v3',
-                    developerKey='AIzaSyAMLcXoQTJ-64JoGMBsa-DIZ1FeH4VnyxI')
+                    developerKey=developerKey)
     request = youtube.search().list(
         part="snippet",
         eventType="live",
@@ -214,10 +214,11 @@ def holo_search(vtuber):
             video_id = item['id']['videoId']
             channel_title = item['snippet']['title']  # 频道标题
             channel_description = item['snippet']['description']  # 频道描述
-            print(f'https://www.youtube.com/watch?v={video_id}')
-            print(f'頻道標題: {channel_title}')
-            print(f'頻道描述: {channel_description}')
-        result = video_id
+            
+            title=f'頻道標題: {channel_title}"\n"'
+            description = f'頻道描述: {channel_description}"\n"'
+            link= f'https://www.youtube.com/watch?v={video_id}'
+        result = title+description+link
         return result
     
     except HttpError as e:
