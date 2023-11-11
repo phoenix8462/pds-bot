@@ -14,7 +14,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,ImageSendMessage
+    MessageEvent, TextMessage, TextSendMessage,ImageSendMessage,QuickReply,MessageAction,QuickReplyButton
 )
 
 app = Flask(__name__)
@@ -227,7 +227,9 @@ def holo_search(vtuber):
     except HttpError as e:
         result = f'：{e}'
         return result 
-
+@app.route("/")
+def index():
+    return "Hello, World!"
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -288,7 +290,15 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
-
+    elif '機房' in c :
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(
+            text="請選擇機房:",
+            quick_reply=QuickReply(items=[
+        QuickReplyButton(action=MessageAction(label="label", text="仁愛15"))
+    ])
+            ))          
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=os.environ.get('PORT', 5000))
     #9*9    
@@ -301,7 +311,6 @@ if __name__ == "__main__":
     #             # print(str(r)+"*"+str(c)+"="+str(r*c))
     #             content += str(r) + "*" + str(c) +"=" +str(r*c)+" "
     #         content += "\n"
-    
     #lotto
     # year=int(event.message.text.split("@")[0])
     # month=int(event.message.text.split("@")[1])    
