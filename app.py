@@ -190,6 +190,21 @@ def work2():
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+item1 =[
+    QuickReplyButton(action=MessageAction(label="仁愛15", text="仁愛15")),
+    QuickReplyButton(action=MessageAction(label="仁愛13", text="仁愛13")),
+    QuickReplyButton(action=MessageAction(label="數據2", text="數據2")),
+    QuickReplyButton(action=MessageAction(label="數據OC", text="數據OC")),
+    QuickReplyButton(action=MessageAction(label="數據3B", text="數據3B")),
+]
+
+item2 =[
+    QuickReplyButton(action=MessageAction(label="數據3B", text="數據3B")),
+    QuickReplyButton(action=MessageAction(label="數據3L", text="數據3L")),
+    QuickReplyButton(action=MessageAction(label="數據3A", text="數據3A")),
+    QuickReplyButton(action=MessageAction(label="數據3R", text="數據3R")),
+    QuickReplyButton(action=MessageAction(label="仁愛15", text="仁愛15")),
+]
 def holo(vtuber):
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
@@ -295,25 +310,13 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(
             text="請選擇機房:",
-            quick_reply=QuickReply(items=[
-        QuickReplyButton(action=MessageAction(label="仁愛15", text="仁愛15")),
-        QuickReplyButton(action=MessageAction(label="仁愛13", text="仁愛13")),
-        QuickReplyButton(action=MessageAction(label="數據2", text="數據2")),
-        QuickReplyButton(action=MessageAction(label="數據OC", text="數據OC")),
-        QuickReplyButton(action=MessageAction(label="數據3B", text="數據3B")),
-    ])      ))    
+            quick_reply=QuickReply(items=item1)      ))    
     elif '數據3B' in c :
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(
             text="請選擇機房:",
-            quick_reply=QuickReply(items=[
-        QuickReplyButton(action=MessageAction(label="數據3B", text="數據3B")),
-        QuickReplyButton(action=MessageAction(label="數據3L", text="數據3L")),
-        QuickReplyButton(action=MessageAction(label="數據3A", text="數據3A")),
-        QuickReplyButton(action=MessageAction(label="數據3R", text="數據3R")),
-        QuickReplyButton(action=MessageAction(label="仁愛15", text="仁愛15")),
-    ])      ))  
+            quick_reply=QuickReply(items=item2)      ))  
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=os.environ.get('PORT', 5000))
     #9*9    
