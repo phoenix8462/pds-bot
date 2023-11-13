@@ -290,7 +290,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
-    elif '機房'or'仁愛'or'數據' in c :
+    elif '機房'or'仁愛' in c :
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(
@@ -301,11 +301,19 @@ def handle_message(event):
         QuickReplyButton(action=MessageAction(label="數據2", text="數據2")),
         QuickReplyButton(action=MessageAction(label="數據OC", text="數據OC")),
         QuickReplyButton(action=MessageAction(label="數據3B", text="數據3B")),
+    ])      ))    
+    elif '數據3B' in c :
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(
+            text="請選擇機房:",
+            quick_reply=QuickReply(items=[
+        QuickReplyButton(action=MessageAction(label="數據3B", text="數據3B")),
         QuickReplyButton(action=MessageAction(label="數據3L", text="數據3L")),
         QuickReplyButton(action=MessageAction(label="數據3A", text="數據3A")),
         QuickReplyButton(action=MessageAction(label="數據3R", text="數據3R")),
-    ])
-            ))          
+        QuickReplyButton(action=MessageAction(label="仁愛15", text="仁愛15")),
+    ])      ))  
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=os.environ.get('PORT', 5000))
     #9*9    
