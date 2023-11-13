@@ -315,7 +315,7 @@ def handle_message(event):
             text="請選擇機房:",
             quick_reply=QuickReply(items=item1)      ))  
 
-    elif '數據3B' in c :
+    elif '數據3' in c :
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(
