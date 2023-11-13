@@ -196,10 +196,18 @@ item1 =[
     QuickReplyButton(action=MessageAction(label="數據2", text="數據2")),
     QuickReplyButton(action=MessageAction(label="數據OC", text="數據OC")),
     QuickReplyButton(action=MessageAction(label="數據3B", text="數據3B")),
+
+]
+
+item2 =[
+    QuickReplyButton(action=MessageAction(label="數據3B", text="數據3B")),
     QuickReplyButton(action=MessageAction(label="數據3L", text="數據3L")),
     QuickReplyButton(action=MessageAction(label="數據3A", text="數據3A")),
     QuickReplyButton(action=MessageAction(label="數據3R", text="數據3R")),
-]
+    QuickReplyButton(action=MessageAction(label="仁愛15", text="仁愛15")),  
+
+] 
+
 def holo(vtuber):
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
@@ -300,12 +308,19 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
-    elif '機房'or'仁愛'or'數據' in c :
+    elif '機房' in c or '仁愛' in c :
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(
             text="請選擇機房:",
-            quick_reply=QuickReply(items=item1)      ))    
+            quick_reply=QuickReply(items=item1)      ))  
+
+    elif '數據3B' in c :
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(
+            text="請選擇機房:",
+            quick_reply=QuickReply(items=item2)      ))       
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=os.environ.get('PORT', 5000))
