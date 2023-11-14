@@ -308,7 +308,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
-    elif '機房' in c or '仁愛' in c :
+    elif '機房' in c or '仁愛' in c or '數據2' in c :
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(
